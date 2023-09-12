@@ -1,11 +1,37 @@
 import requests
+from datetime import datetime, timedelta
+from database.db import check_event_id_exists, insert_event
+import uuid
+import re
+
+
+# Helper functions
+def extract_number_from_id(string_id):
+    match = re.search(r'(\d+)', string_id)
+    if match:
+        return match.group(1)
+    return ''
+
+def get_custom_event_id(event):
+    # Extracting required IDs
+    competition_id = extract_number_from_id(event["sport_event"]["sport_event_context"]["competition"]["id"])
+    season_id = extract_number_from_id(event["sport_event"]["sport_event_context"]["season"]["id"])
+    competitor_1_id = extract_number_from_id(event["sport_event"]["competitors"][0]["id"])
+    competitor_2_id = extract_number_from_id(event["sport_event"]["competitors"][1]["id"])
+
+    # Concatenating extracted numbers to form event_ID
+    return competition_id + season_id + competitor_1_id + competitor_2_id
+
+
+# Calculate the date for today - 1
+yesterday = datetime.now() - timedelta(3)
+formatted_yesterday = yesterday.strftime('%Y-%m-%d')
+print(formatted_yesterday)
 
 # Fetching the data from the API
-url = "http://api.sportradar.us/tennis/trial/v3/en/schedules/2023-09-10/summaries.json?api_key=uqmpq6cdah4d25ww4wep2znp"
+url = f"http://api.sportradar.us/tennis/trial/v3/en/schedules/{formatted_yesterday}/summaries.json?api_key=uqmpq6cdah4d25ww4wep2znp"
 response = requests.get(url)
 data = response.json()
-
-# Filter and structure the data based on the given requirements
 def structure_data(event):
     competitors = event["sport_event"]["competitors"]
 
@@ -26,6 +52,7 @@ def structure_data(event):
     flag = "home" if home_total_score > away_total_score else "away"
 
     structured = {
+        "event_id": get_custom_event_id(event),
         "date": event["sport_event"]["start_time"].split("T")[0],
         "competition_name": event["sport_event"]["sport_event_context"]["competition"]["name"],
         "round_name": event["sport_event"]["sport_event_context"]["round"]["name"],
@@ -36,10 +63,15 @@ def structure_data(event):
         "scores": scores_format,
         "flag": flag
     }
-
     return structured
 
+# Filter and structure the data based on the given requirements
 # Apply our structure function
 structured_data = [structure_data(event) for event in data["summaries"]]
 
-print(structured_data)
+# Insert the data into the database
+for event in structured_data:
+    if not check_event_id_exists(event["event_id"]):  # check for each event
+        insert_event(event)
+        print('data inserted')
+print('Data insertion done')

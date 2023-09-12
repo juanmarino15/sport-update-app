@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./database/:/docker-entrypoint-initdb.d/
+
+    environment:
+      POSTGRES_USER: sportsUpdate
+      POSTGRES_PASSWORD: sportsUpdate
+      POSTGRES_DB: sportsUpdate
+    ports:
+      - "5432:5432"
+
+  datacollector:
+    build:
+      context: .
+      dockerfile: DataCollector/Dockerfile
+    depends_on:
+      - postgres
+
+  webapp:
+    build:
+      context: .
+      dockerfile: webApp/Dockerfile
+    ports:
+      - "5001:5000"
+    depends_on:
+      - postgres
+
+volumes:
+  pgdata:
