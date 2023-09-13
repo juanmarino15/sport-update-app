@@ -10,4 +10,3 @@ Werkzeug==2.3.7
 psycopg2==2.8.6
 sqlalchemy
 requests
-

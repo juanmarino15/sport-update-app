@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import requests
 from datetime import datetime, timedelta
 from database.db import check_event_id_exists, insert_event
