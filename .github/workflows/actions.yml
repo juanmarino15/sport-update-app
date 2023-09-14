@@ -21,15 +21,15 @@ jobs:
 
       - name: Build and Push Docker Images
         run: |
-          docker build -t registry.heroku.com/your-app-name/web -f webApp/Dockerfile .
-          docker push registry.heroku.com/your-app-name/web
+          docker build -t registry.heroku.com/sports-update-app/web webApp/
+          docker push registry.heroku.com/sports-update-app/web
           
-          docker build -t registry.heroku.com/your-app-name/datacollector DataCollector/
-          docker push registry.heroku.com/your-app-name/datacollector
+          docker build -t registry.heroku.com/sports-update-app/datacollector DataCollector/
+          docker push registry.heroku.com/sports-update-app/datacollector
 
       - name: Release Images to Heroku
         run: |
-          heroku container:release web datacollector -a your-app-name
+          heroku container:release web datacollector -a sports-update-app
         env:
           HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
 

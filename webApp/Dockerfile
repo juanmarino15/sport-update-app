@@ -4,10 +4,10 @@ FROM python:3.9
 WORKDIR /app
 
 # Copy the requirements.txt from the project root into the container's WORKDIR
-COPY webApp/requirements.txt .
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # Copy the application files into the container's WORKDIR
-COPY webApp/* ./
+COPY ./webApp/ .
 
 CMD ["python", "app.py"]
