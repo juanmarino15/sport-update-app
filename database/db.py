@@ -9,7 +9,7 @@ def get_db_connection():
         port="5432"
     )
     return conn
-
+# test
 def check_event_id_exists(event_id):
     """Check if an event with the given ID already exists."""
     conn = get_db_connection()
