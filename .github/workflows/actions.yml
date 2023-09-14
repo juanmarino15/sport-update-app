@@ -21,7 +21,7 @@ jobs:
 
       - name: Build and Push Docker Images
         run: |
-          docker build -t registry.heroku.com/your-app-name/web webApp/
+          docker build -t registry.heroku.com/your-app-name/web -f webApp/Dockerfile .
           docker push registry.heroku.com/your-app-name/web
           
           docker build -t registry.heroku.com/your-app-name/datacollector DataCollector/
