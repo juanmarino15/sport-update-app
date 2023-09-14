@@ -10,12 +10,12 @@ RUN pip install -r requirements.txt
 
 COPY DataCollector/ .
 COPY database/ database/
-COPY init_db.sh .
+#COPY init_db.sh .
 
 # Set permissions for the necessary scripts and files
 RUN chmod +x /app/apiCollector.py
 RUN chmod +x /app/start.sh
-RUN chmod +x /app/init_db.sh
+RUN #chmod +x /app/init_db.sh
 
 # Set up the cron job
 RUN crontab crontab
