@@ -1,0 +1,13 @@
+build:
+  docker:
+    web: webApp/Dockerfile
+    datacollector: DataCollector/Dockerfile
+
+release:
+  image: datacollector
+  command:
+    - ./init_db.sh
+
+run:
+  web: python app.py
+  datacollector: ./start.sh
