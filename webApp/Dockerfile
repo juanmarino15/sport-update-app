@@ -8,6 +8,6 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # Copy the application files into the container's WORKDIR
-COPY ./webApp/ .
+COPY webApp/ .
 
 CMD ["python", "app.py"]
