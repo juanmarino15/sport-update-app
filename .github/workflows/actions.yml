@@ -24,7 +24,7 @@ jobs:
           docker build -t registry.heroku.com/sports-update-app/web -f webApp/Dockerfile .
           docker push registry.heroku.com/sports-update-app/web
           
-          docker build -t registry.heroku.com/sports-update-app/datacollector DataCollector/
+          docker build -t registry.heroku.com/sports-update-app/datacollector -f DataCollector/Dockerfile .
           docker push registry.heroku.com/sports-update-app/datacollector
 
       - name: Release Images to Heroku
