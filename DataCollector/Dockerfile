@@ -12,8 +12,8 @@ COPY . .
 #COPY init_db.sh .
 
 # Set permissions for the necessary scripts and files
-RUN chmod +x /app/apiCollector.py
-RUN chmod +x /app/start.sh
+RUN chmod +x /app/DataCollector/apiCollector.py
+RUN chmod +x /app/DataCollector/start.sh
 RUN #chmod +x /app/init_db.sh
 
 # Set up the cron job
