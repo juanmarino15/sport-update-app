@@ -8,17 +8,17 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY DataCollector/ /app/DataCollector
-COPY database/ /app/database
+COPY DataCollector/ /DataCollector
+COPY database/ /database
 #COPY init_db.sh .
 
 # Set permissions for the necessary scripts and files
 RUN chmod +x /app/DataCollector/apiCollector.py
-RUN chmod +x /app/DataCollector/start.sh
+RUN chmod +x /app/start.sh
 RUN #chmod +x /app/init_db.sh
 
 # Set up the cron job
-RUN crontab /app/DataCollector/crontab
+RUN crontab /app/crontab
 
 # The command that runs when the container starts
-CMD ["/app/DataCollector/start.sh"]
+CMD ["/app/start.sh"]
