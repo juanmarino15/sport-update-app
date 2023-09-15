@@ -9,7 +9,7 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY . .
-COPY database/initialize_db.sql /docker-entrypoint-initdb.d/
+#COPY database/initialize_db.sql /docker-entrypoint-initdb.d/
 
 
 # Set permissions for the necessary scripts and files
