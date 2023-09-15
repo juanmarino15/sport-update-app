@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+# Add these lines at the top of your script
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import requests
 from datetime import datetime, timedelta
 from database.db import check_event_id_exists, insert_event
