@@ -1,13 +1,16 @@
 import psycopg2
+import os
 
 def get_db_connection():
-    conn = psycopg2.connect(
-        dbname="sportsUpdate",
-        user="sportsUpdate",
-        password="sportsUpdate",
-        host="postgres",
-        port="5432"
-    )
+    # conn = psycopg2.connect(
+    #     dbname="sportsUpdate",
+    #     user="sportsUpdate",
+    #     password="sportsUpdate",
+    #     host="postgres",
+    #     port="5432"
+    # )
+    DATABASE_URL = os.environ['postgres://uxebgvrblyuvzx:b48f2bc88ec7960cb1852a4c858136ee9f4f45de49b63fae002199451adc5a09@ec2-3-232-218-211.compute-1.amazonaws.com:5432/d53cn4pds83et']
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     return conn
 # test
 def check_event_id_exists(event_id):
