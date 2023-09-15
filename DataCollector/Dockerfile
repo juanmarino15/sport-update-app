@@ -17,7 +17,7 @@ RUN chmod +x /app/DataCollector/start.sh
 RUN #chmod +x /app/init_db.sh
 
 # Set up the cron job
-RUN crontab crontab
+RUN crontab /app/DataCollector/crontab
 
 # The command that runs when the container starts
 CMD ["./start.sh"]
