@@ -4,6 +4,7 @@ import psycopg2
 def initialize_db():
     DATABASE_URL = os.environ['DATABASE_URL']
     conn = psycopg2.connect(DATABASE_URL)
+    print('connected to db')
 
     cur = conn.cursor()
 
