@@ -20,4 +20,4 @@ RUN #chmod +x /app/init_db.sh
 RUN crontab /app/DataCollector/crontab
 
 # The command that runs when the container starts
-CMD ["app/DataCollecor/start.sh"]
+CMD ["./DataCollecor/start.sh"]
