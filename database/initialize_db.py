@@ -8,8 +8,7 @@ def initialize_db():
 
     cur = conn.cursor()
 
-    commands = (
-        """
+    cur.execute("""
         CREATE TABLE IF NOT EXISTS sport_events (
             event_id TEXT PRIMARY KEY,
             event_start_time TIMESTAMP,
@@ -38,12 +37,7 @@ def initialize_db():
             scores TEXT,
             flag TEXT
         );
-        """
-    )
-
-    # Execute the commands
-    for command in commands:
-        cur.execute(command)
+        """)
 
     # Commit the changes and close the connection
     conn.commit()
