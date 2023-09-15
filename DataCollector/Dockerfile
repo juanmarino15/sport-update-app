@@ -9,7 +9,7 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY DataCollector/ .
-COPY database/ .
+COPY database/ DataCollector/
 #COPY init_db.sh .
 
 # Set permissions for the necessary scripts and files
