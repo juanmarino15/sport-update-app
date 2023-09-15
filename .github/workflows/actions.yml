@@ -38,3 +38,6 @@ jobs:
           heroku container:release web datacollector -a sports-update-app
         env:
           HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
+
+      - name: Initialize Database
+        run: heroku run python initialize_db.py --app sports-update-app

@@ -15,7 +15,7 @@ COPY database/initialize_db.sql /docker-entrypoint-initdb.d/
 # Set permissions for the necessary scripts and files
 RUN chmod +x /app/DataCollector/apiCollector.py
 RUN chmod +x /app/DataCollector/start.sh
-#RUN #chmod +x /app/database/initialize_db.sql
+#RUN #chmod +x /app/database/initialize_db.py
 
 # Set up the cron job
 RUN crontab /app/DataCollector/crontab
