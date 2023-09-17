@@ -11,7 +11,6 @@ COPY . .
 
 # If you have any scripts or files specific to DataAnalyzer that need permissions set:
 RUN chmod +x /app/DataAnalyzer/dataAnalyzer.py
-RUN chmod +x /app/DataAnalyzer/start.sh
 
 
 # The command that runs when the container starts
