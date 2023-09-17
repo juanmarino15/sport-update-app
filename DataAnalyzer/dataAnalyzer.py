@@ -47,8 +47,8 @@ if __name__ == "__main__":
 
     yesterday = datetime.now() - timedelta(1)
     formatted_yesterday = yesterday.strftime('%Y-%m-%d')
-    print(f"Fetching events for {formatted_yesterday} where one of the competitors is from Colombia...")
+    print(f"Fetching events for {formatted_yesterday} where one of the competitors is from USA...")
 
     colombian_events_today = fetch_colombian_events()
     print(colombian_events_today)
-    print(f"Retrieved {len(colombian_events_today)} events from today with Colombian competitors.")
+    print(f"Retrieved {len(colombian_events_today)} events from today with USA competitors.")

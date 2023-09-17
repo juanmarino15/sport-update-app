@@ -64,7 +64,6 @@ def structure_data(event):
 
 
 
-
 def main():
     set_process_status("datacollector", True)
 
