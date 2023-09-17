@@ -79,7 +79,7 @@ def retrieve_events():
 
     query = """
         SELECT * 
-        FROM <sport_events> 
+        FROM sport_events 
         WHERE event_start_time = %s 
         AND (competitor_1_country = 'colombia' OR competitor_2_country = 'colombia')
     """
