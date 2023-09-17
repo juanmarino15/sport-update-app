@@ -75,7 +75,6 @@ def structure_data(event):
 # Filter and structure the data based on the given requirements
 # Apply our structure function
 structured_data = [structure_data(event) for event in data["summaries"]]
-print(structured_data)
 
 # Insert the data into the database
 for event in structured_data:
