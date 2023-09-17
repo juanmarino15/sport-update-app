@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/DataAnalyzer/DataAnalyzer.iml" filepath="$PROJECT_DIR$/DataAnalyzer/DataAnalyzer.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/my_flask_app.iml" filepath="$PROJECT_DIR$/.idea/my_flask_app.iml" />
     </modules>
   </component>
