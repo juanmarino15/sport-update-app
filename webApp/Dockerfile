@@ -7,7 +7,10 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-# Copy the application files into the container's WORKDIR
-COPY /webApp .
+# Copy the entire project into the container's WORKDIR
+COPY . .
+
+# Set the working directory to /app/webApp
+WORKDIR /app/webApp
 
 CMD ["python", "app.py"]
