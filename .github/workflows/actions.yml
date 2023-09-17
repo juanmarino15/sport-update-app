@@ -33,12 +33,12 @@ jobs:
           docker build -t registry.heroku.com/sports-update-app/datacollector -f DataCollector/Dockerfile .
           docker push registry.heroku.com/sports-update-app/datacollector
           
-          docker build -t registry.heroku.com/sports-update-app/dataanalyzer -f DataAnalyzer/Dockerfile .
-          docker push registry.heroku.com/sports-update-app/dataanalyzer
+#          docker build -t registry.heroku.com/sports-update-app/dataanalyzer -f DataAnalyzer/Dockerfile .
+#          docker push registry.heroku.com/sports-update-app/dataanalyzer
 
       - name: Release Images to Heroku
         run: |
-          heroku container:release web datacollector dataanalyzer -a sports-update-app
+          heroku container:release web datacollector -a sports-update-app
         env:
           HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
 
