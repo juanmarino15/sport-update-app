@@ -67,12 +67,12 @@ def insert_event(event):
     else:
         print(f"Event with ID {event['event_id']} already exists in the database.")
 
-from datetime import datetime
+from datetime import datetime,timedelta
 
 def retrieve_events():
     # Fetch today's date
-    today_date = datetime.now().strftime('%Y-%m-%d')
-
+    yesterday = datetime.now() - timedelta(1)
+    formatted_yesterday = yesterday.strftime('%Y-%m-%d')
     # Connect to the database
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -83,7 +83,7 @@ def retrieve_events():
         WHERE event_start_time = %s 
         AND (competitor_1_country = 'colombia' OR competitor_2_country = 'colombia')
     """
-    cursor.execute(query, (today_date,))
+    cursor.execute(query, (formatted_yesterday,))
 
     results = cursor.fetchall()
     conn.close()

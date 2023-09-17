@@ -30,7 +30,7 @@ def get_custom_event_id(event):
 
 
 # Calculate the date for today - 1
-yesterday = datetime.now() - timedelta(3)
+yesterday = datetime.now() - timedelta(1)
 formatted_yesterday = yesterday.strftime('%Y-%m-%d')
 print(formatted_yesterday)
 

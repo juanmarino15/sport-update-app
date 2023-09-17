@@ -4,7 +4,7 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from datetime import datetime
+from datetime import datetime,timedelta
 from database.db import retrieve_events
 
 def fetch_colombian_events():
@@ -38,8 +38,9 @@ def fetch_colombian_events():
     return colombian_events
 
 if __name__ == "__main__":
-    today = datetime.now().strftime('%Y-%m-%d')
-    print(f"Fetching events for {today} where one of the competitors is from Colombia...")
+    yesterday = datetime.now() - timedelta(1)
+    formatted_yesterday = yesterday.strftime('%Y-%m-%d')
+    print(f"Fetching events for {formatted_yesterday} where one of the competitors is from Colombia...")
 
     colombian_events_today = fetch_colombian_events()
     print(f"Retrieved {len(colombian_events_today)} events from today with Colombian competitors.")
