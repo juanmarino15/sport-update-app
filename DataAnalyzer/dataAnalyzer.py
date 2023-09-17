@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 from database.db import retrieve_events, check_process_status
 
 def fetch_colombian_events():
+    # test
     """Fetch today's events where one of the competitors is from Colombia."""
 
     # Fetch the events from the database
