@@ -12,6 +12,7 @@ def fetch_colombian_events():
 
     # Fetch the events from the database
     events = retrieve_events()
+# test
 
     # Store the events
     colombian_events = []
