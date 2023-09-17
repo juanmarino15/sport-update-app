@@ -81,7 +81,7 @@ def retrieve_events():
         SELECT * 
         FROM sport_events 
         WHERE event_start_time = %s 
-        AND (competitor_1_country = 'colombia' OR competitor_2_country = 'colombia')
+        AND (competitor_1_country = 'Colombia' OR competitor_2_country = 'Colombia')
     """
     cursor.execute(query, (formatted_yesterday,))
 
