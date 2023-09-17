@@ -39,6 +39,7 @@ url = f"http://api.sportradar.us/tennis/trial/v3/en/schedules/{formatted_yesterd
 response = requests.get(url)
 data = response.json()
 def structure_data(event):
+    print(event)
     competitors = event["sport_event"]["competitors"]
 
     # Check if "period_scores" exists
