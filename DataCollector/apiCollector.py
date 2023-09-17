@@ -60,16 +60,17 @@ def structure_data(event):
 
     structured = {
         "event_id": get_custom_event_id(event),
-        "date": event["sport_event"]["start_time"].split("T")[0],
-        "competition_name": event["sport_event"]["sport_event_context"]["competition"]["name"],
-        "round_name": event["sport_event"]["sport_event_context"]["round"]["name"],
-        "competitors_name": [c["name"] for c in competitors],
+        "date": event["sport_event"].get("start_time", "N/A").split("T")[0],
+        "competition_name": event["sport_event"]["sport_event_context"]["competition"].get("name", "N/A"),
+        "round_name": event["sport_event"]["sport_event_context"]["round"].get("name", "N/A"),
+        "competitors_name": [c.get("name", "N/A") for c in competitors],
         "competitors_country": [c.get("country", "N/A") for c in competitors],
         "competitors_country_code": [c.get("country_code", "N/A") for c in competitors],
-        "competitors_qualifier": [c["qualifier"] for c in competitors],
+        "competitors_qualifier": [c.get("qualifier", "N/A") for c in competitors],
         "scores": scores_format,
         "flag": flag
     }
+
     return structured
 
 # Filter and structure the data based on the given requirements
