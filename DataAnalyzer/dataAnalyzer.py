@@ -43,4 +43,5 @@ if __name__ == "__main__":
     print(f"Fetching events for {formatted_yesterday} where one of the competitors is from Colombia...")
 
     colombian_events_today = fetch_colombian_events()
+    print(colombian_events_today)
     print(f"Retrieved {len(colombian_events_today)} events from today with Colombian competitors.")
