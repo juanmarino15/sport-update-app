@@ -39,6 +39,14 @@ def initialize_db():
         );
         """)
 
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS process_status (
+        process_name VARCHAR(100) PRIMARY KEY,
+        is_completed BOOLEAN NOT NULL
+        );
+        """)
+
+
     # Commit the changes and close the connection
     conn.commit()
     cur.close()

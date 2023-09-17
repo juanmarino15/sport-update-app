@@ -6,7 +6,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import requests
 from datetime import datetime, timedelta
-from database.db import check_event_id_exists, insert_event
+from database.db import check_event_id_exists, insert_event, set_process_status
 import uuid
 import re
 
@@ -27,17 +27,6 @@ def get_custom_event_id(event):
 
     # Concatenating extracted numbers to form event_ID
     return competition_id + season_id + competitor_1_id + competitor_2_id
-
-
-# Calculate the date for today - 1
-yesterday = datetime.now() - timedelta(1)
-formatted_yesterday = yesterday.strftime('%Y-%m-%d')
-print(formatted_yesterday)
-
-# Fetching the data from the API
-url = f"http://api.sportradar.us/tennis/trial/v3/en/schedules/{formatted_yesterday}/summaries.json?api_key=uqmpq6cdah4d25ww4wep2znp"
-response = requests.get(url)
-data = response.json()
 def structure_data(event):
     competitors = event["sport_event"]["competitors"]
 
@@ -72,6 +61,19 @@ def structure_data(event):
 
     return structured
 
+
+set_process_status("datacollector", True)
+# Calculate the date for today - 1
+yesterday = datetime.now() - timedelta(1)
+formatted_yesterday = yesterday.strftime('%Y-%m-%d')
+print(formatted_yesterday)
+
+# Fetching the data from the API
+url = f"http://api.sportradar.us/tennis/trial/v3/en/schedules/{formatted_yesterday}/summaries.json?api_key=uqmpq6cdah4d25ww4wep2znp"
+response = requests.get(url)
+data = response.json()
+
+
 # Filter and structure the data based on the given requirements
 # Apply our structure function
 structured_data = [structure_data(event) for event in data["summaries"]]
@@ -82,3 +84,5 @@ for event in structured_data:
         insert_event(event)
         print('data inserted')
 print('Data insertion done')
+set_process_status("datacollector", False)
+

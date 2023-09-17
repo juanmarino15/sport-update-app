@@ -2,17 +2,17 @@
 
 import sys
 import os
+import time
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from datetime import datetime,timedelta
-from database.db import retrieve_events
+from datetime import datetime, timedelta
+from database.db import retrieve_events, check_process_status
 
 def fetch_colombian_events():
     """Fetch today's events where one of the competitors is from Colombia."""
 
     # Fetch the events from the database
     events = retrieve_events()
-# test
 
     # Store the events
     colombian_events = []
@@ -38,6 +38,12 @@ def fetch_colombian_events():
     return colombian_events
 
 if __name__ == "__main__":
+
+    print("Checking if datacollector has finished processing...")
+    while not check_process_status("datacollector"):
+        print("Waiting for datacollector to finish...")
+        time.sleep(10)
+
     yesterday = datetime.now() - timedelta(1)
     formatted_yesterday = yesterday.strftime('%Y-%m-%d')
     print(f"Fetching events for {formatted_yesterday} where one of the competitors is from Colombia...")

@@ -108,3 +108,47 @@ def retrieve_events():
 
     return events
 
+def set_process_status(process_name, status):
+    """Set the status of a process in the database."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Check if process_name already exists
+    cursor.execute("SELECT COUNT(*) FROM process_status WHERE process_name = %s", (process_name,))
+    count = cursor.fetchone()[0]
+
+    if count == 0:
+        # If process_name doesn't exist, insert a new record
+        cursor.execute(
+            "INSERT INTO process_status (process_name, is_completed) VALUES (%s, %s)",
+            (process_name, status)
+        )
+    else:
+        # If process_name exists, update the status
+        cursor.execute(
+            "UPDATE process_status SET is_completed = %s WHERE process_name = %s",
+            (status, process_name)
+        )
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def check_process_status(process_name):
+    """Check the status of a process in the database."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT is_completed FROM process_status WHERE process_name = %s",
+        (process_name,)
+    )
+    status = cursor.fetchone()
+    cursor.close()
+    conn.close()
+
+    if status:
+        return status[0]
+    else:
+        return None
+
+
