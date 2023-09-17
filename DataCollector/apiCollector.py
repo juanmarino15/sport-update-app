@@ -39,7 +39,6 @@ url = f"http://api.sportradar.us/tennis/trial/v3/en/schedules/{formatted_yesterd
 response = requests.get(url)
 data = response.json()
 def structure_data(event):
-    print(event)
     competitors = event["sport_event"]["competitors"]
 
     # Check if "period_scores" exists
@@ -76,6 +75,7 @@ def structure_data(event):
 # Filter and structure the data based on the given requirements
 # Apply our structure function
 structured_data = [structure_data(event) for event in data["summaries"]]
+print(structured_data)
 
 # Insert the data into the database
 for event in structured_data:
