@@ -23,12 +23,12 @@ def check_event_id_exists(event_id):
     return count > 0
 
 def insert_event(event):
+    print(event['date'])
+    print(event['competitors_country'])
+
     if not check_event_id_exists(event['event_id']):
         conn = get_db_connection()
         cursor = conn.cursor()
-        print(event['date'])
-        print(event['competitors_country'])
-
         query = """
         INSERT INTO sport_events (
             event_id,
