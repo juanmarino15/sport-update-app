@@ -2,6 +2,8 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # Add parent directory to sys.path
 from flask import Flask, render_template_string, request
+from datetime import datetime,timedelta
+
 
 from DataAnalyzer import dataAnalyzer  # Import the module
 
@@ -9,6 +11,9 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
 def main():
+    yesterday = datetime.now() - timedelta(1)
+    formatted_yesterday = yesterday.strftime('%Y-%m-%d')
+
     if request.method == "POST":
         country = request.form.get("country")
         events = dataAnalyzer.fetch_tennis_events(country)
@@ -68,13 +73,14 @@ def main():
                     </table>
                 {% else %}
                     <div class="alert alert-info">
-                        No results found for {{ country }} on {{ current_date }}.
+                        No results found for {{ country }} on {{ yesterday }}.
+                        No results found for {{ country }} on {{ yesterday }}.
                     </div>
                 {% endif %}
             </div>
         </body>
         </html>
-    ''', events=events, country=country, current_date=current_date)
+    ''', events=events, country=country, yesterday=formatted_yesterday)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
