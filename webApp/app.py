@@ -11,7 +11,6 @@ app = Flask(__name__)
 @app.route("/")
 def main():
     events = dataAnalyzer.fetch_colombian_events()
-    print(events)
     return render_template_string('''
         <!DOCTYPE html>
         <html>

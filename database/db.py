@@ -37,9 +37,9 @@ def insert_event(event):
             round_name, 
             competitor_1_name, 
             competitor_1_country, 
+            competitors_1_qualifier,
             competitor_2_name, 
             competitor_2_country,
-            competitors_1_qualifier,
             competitors_2_qualifier,
             scores,
             flag
@@ -83,7 +83,7 @@ def retrieve_events():
         SELECT * 
         FROM sport_events 
         WHERE event_start_time = %s 
-        AND (competitor_1_country = 'USA' OR competitor_2_country = 'USA')
+        AND (competitor_1_country = 'Colombia' OR competitor_2_country = 'Colombia')
     """
     cursor.execute(query, (formatted_yesterday,))
 

@@ -28,8 +28,8 @@ def get_custom_event_id(event):
     # Concatenating extracted numbers to form event_ID
     return competition_id + season_id + competitor_1_id + competitor_2_id
 def structure_data(event):
+    print(event)
     competitors = event["sport_event"]["competitors"]
-
     # Check if "period_scores" exists
     scores = event["sport_event_status"].get("period_scores", [])
 
@@ -58,6 +58,8 @@ def structure_data(event):
         "scores": scores_format,
         "flag": flag
     }
+
+    print(structured)
 
     return structured
 
