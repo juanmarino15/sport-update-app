@@ -86,7 +86,6 @@ def retrieve_events(country):
         AND (competitor_1_country = %s OR competitor_2_country = %s)
     """
     cursor.execute(query, (formatted_yesterday, country, country))
-    cursor.execute(query, (formatted_yesterday,))
 
     results = cursor.fetchall()
     conn.close()
