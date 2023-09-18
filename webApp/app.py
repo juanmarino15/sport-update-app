@@ -18,6 +18,7 @@ def main():
         country = request.form.get("country")
         events = dataAnalyzer.fetch_tennis_events(country)
     else:
+        country = "Colombia"  # Default country
         events = dataAnalyzer.fetch_tennis_events()
 
     return render_template_string('''
