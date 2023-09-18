@@ -91,22 +91,22 @@ def retrieve_events():
     conn.close()
 
     # Convert results into a list of dictionaries
-    events = [{
-        "event_id": row[0],
-        "event_start_time": row[1],
-        "competition_name": row[2],
-        "round_name": row[3],
-        "competitor_1_name": row[4],
-        "competitor_1_country": row[5],
-        "competitor_2_name": row[6],
-        "competitor_2_country": row[7],
-        "competitors_1_qualifier": row[8],
-        "competitors_2_qualifier": row[9],
-        "scores": row[10],
-        "flag": row[11]
-    } for row in results]
+    # events = [{
+    #     "event_id": row[0],
+    #     "event_start_time": row[1],
+    #     "competition_name": row[2],
+    #     "round_name": row[3],
+    #     "competitor_1_name": row[4],
+    #     "competitor_1_country": row[5],
+    #     "competitor_2_name": row[6],
+    #     "competitor_2_country": row[7],
+    #     "competitors_1_qualifier": row[8],
+    #     "competitors_2_qualifier": row[9],
+    #     "scores": row[10],
+    #     "flag": row[11]
+    # } for row in results]
 
-    return events
+    return results
 
 def set_process_status(process_name, status):
     """Set the status of a process in the database."""
