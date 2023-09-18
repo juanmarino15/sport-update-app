@@ -14,6 +14,7 @@ def fetch_colombian_events():
 
     # Fetch the events from the database
     events = retrieve_events()
+    print(events)
 
     # Store the events
     colombian_events = []
@@ -35,6 +36,7 @@ def fetch_colombian_events():
             "flag": event['flag']
         }
         colombian_events.append(colombian_event)
+
 
     return colombian_events
 
