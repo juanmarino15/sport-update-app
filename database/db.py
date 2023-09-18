@@ -106,7 +106,7 @@ def retrieve_events():
         "flag": row[25]
     } for row in results]
 
-    return results
+    return events
 
 def set_process_status(process_name, status):
     """Set the status of a process in the database."""
