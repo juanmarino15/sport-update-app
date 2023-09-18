@@ -39,36 +39,42 @@ def main():
                     {{ message }}
                 </div>
                 {% endif %}
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Start Time</th>
-                            <th>Competition</th>
-                            <th>Round</th>
-                            <th>Competitor 1</th>
-                            <th>Competitor 2</th>
-                            <th>Scores</th>
-                            <th>Winner</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for event in events %}
+                {% if events %}
+                    <table class="table table-striped">
+                        <thead>
                             <tr>
-                                <td>{{ event.start_time }}</td>
-                                <td>{{ event.competition }}</td>
-                                <td>{{ event.round }}</td>
-                                <td>{{ event.competitor_1.name }} ({{ event.competitor_1.country }})</td>
-                                <td>{{ event.competitor_2.name }} ({{ event.competitor_2.country }})</td>
-                                <td>{{ event.scores }}</td>
-                                <td>{{ "Competitor 1" if event.flag == "Competitors_1_qualifier" else "Competitor 2" }}</td>
+                                <th>Start Time</th>
+                                <th>Competition</th>
+                                <th>Round</th>
+                                <th>Competitor 1</th>
+                                <th>Competitor 2</th>
+                                <th>Scores</th>
+                                <th>Winner</th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {% for event in events %}
+                                <tr>
+                                    <td>{{ event.start_time }}</td>
+                                    <td>{{ event.competition }}</td>
+                                    <td>{{ event.round }}</td>
+                                    <td>{{ event.competitor_1.name }} ({{ event.competitor_1.country }})</td>
+                                    <td>{{ event.competitor_2.name }} ({{ event.competitor_2.country }})</td>
+                                    <td>{{ event.scores }}</td>
+                                    <td>{{ "Competitor 1" if event.flag == "Competitors_1_qualifier" else "Competitor 2" }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="alert alert-info">
+                        No results found for {{ country }} on {{ current_date }}.
+                    </div>
+                {% endif %}
             </div>
         </body>
         </html>
-    ''', events=events)
+    ''', events=events, country=country, current_date=current_date)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
