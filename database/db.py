@@ -71,7 +71,7 @@ def insert_event(event):
 
 from datetime import datetime,timedelta
 
-def retrieve_events():
+def retrieve_events(country):
     # Fetch today's date
     yesterday = datetime.now() - timedelta(1)
     formatted_yesterday = yesterday.strftime('%Y-%m-%d')
@@ -83,8 +83,9 @@ def retrieve_events():
         SELECT * 
         FROM sport_events 
         WHERE event_start_time = %s 
-        AND (competitor_1_country = 'USA' OR competitor_2_country = 'USA')
+        AND (competitor_1_country = %s OR competitor_2_country = %s)
     """
+    cursor.execute(query, (formatted_yesterday, country, country))
     cursor.execute(query, (formatted_yesterday,))
 
     results = cursor.fetchall()
