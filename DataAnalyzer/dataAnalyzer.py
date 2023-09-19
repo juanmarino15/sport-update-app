@@ -42,6 +42,7 @@ def fetch_tennis_events(country = None):
 
 def country_statistics():
     events = retrieve_events()
+    print(events)
 
     # Dictionary to store player counts and winners count per country
     stats = {}
