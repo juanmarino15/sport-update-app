@@ -41,6 +41,33 @@ def fetch_tennis_events(country = None):
 
     return country_events
 
+def country_statistics():
+    events = retrieve_events()
+
+    # Dictionary to store player counts and winners count per country
+    stats = {}
+
+    for event in events:
+        # Check for competitor_1
+        c1_country = event['competitor_1']['country']
+        if c1_country not in stats:
+            stats[c1_country] = {'players': 0, 'winners': 0}
+        stats[c1_country]['players'] += 1
+
+        # Check for competitor_2
+        c2_country = event['competitor_2']['country']
+        if c2_country not in stats:
+            stats[c2_country] = {'players': 0, 'winners': 0}
+        stats[c2_country]['players'] += 1
+
+        # Check winner
+        if event['flag'] == "Competitor_1_qualifier":
+            stats[c1_country]['winners'] += 1
+        else:
+            stats[c2_country]['winners'] += 1
+
+    return stats
+
 if __name__ == "__main__":
 
     print("Checking if datacollector has finished processing...")
@@ -55,3 +82,9 @@ if __name__ == "__main__":
     country_events_today = fetch_tennis_events()
     print(country_events_today)
     print(f"Retrieved {len(country_events_today)} events from today with Colombian competitors.")
+
+    # Call the statistics function and print results
+    stats = country_statistics()
+    print(stats)
+    # for country, data in stats.items():
+    #     print(f"{country}: Players - {data['players']}, Winners - {data['winners']}")

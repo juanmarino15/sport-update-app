@@ -71,21 +71,32 @@ def insert_event(event):
 
 from datetime import datetime,timedelta
 
-def retrieve_events(country):
+# this function will retrieve all events if the country variable is empty
+def retrieve_events(country=None):
     # Fetch today's date
     yesterday = datetime.now() - timedelta(1)
     formatted_yesterday = yesterday.strftime('%Y-%m-%d')
+
     # Connect to the database
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    query = """
+    # If country is not specified, fetch all events
+    if not country:
+        query = """
+        SELECT * 
+        FROM sport_events 
+        WHERE event_start_time = %s
+    """
+        cursor.execute(query, (formatted_yesterday,))
+    else:
+        query = """
         SELECT * 
         FROM sport_events 
         WHERE event_start_time = %s 
         AND (competitor_1_country = %s OR competitor_2_country = %s)
     """
-    cursor.execute(query, (formatted_yesterday, country, country))
+        cursor.execute(query, (formatted_yesterday, country, country))
 
     results = cursor.fetchall()
     conn.close()
@@ -107,6 +118,7 @@ def retrieve_events(country):
     } for row in results]
 
     return events
+
 
 def set_process_status(process_name, status):
     """Set the status of a process in the database."""

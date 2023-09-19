@@ -31,7 +31,7 @@ def main():
         </head>
         <body>
             <div class="container">
-                <h2>Tennis Events</h2>
+                <h2>Tennis Events Results of players from {{ country }} on {{ yesterday }}</h2>
                 <form method="post">
                     <div class="form-group">
                         <label for="country">Country:</label>
@@ -74,8 +74,7 @@ def main():
                     </table>
                 {% else %}
                     <div class="alert alert-info">
-                        No results found for {{ country }} on {{ yesterday }}.
-                        No results found for {{ country }} on {{ yesterday }}.
+                        No results found for tennis players from {{ country }} on {{ yesterday }}.
                     </div>
                 {% endif %}
             </div>
