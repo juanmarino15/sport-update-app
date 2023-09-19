@@ -42,31 +42,32 @@ def fetch_tennis_events(country = None):
 
 def country_statistics():
     events = retrieve_events()
-    print(events)
 
     # Dictionary to store player counts and winners count per country
     stats = {}
 
     for event in events:
         # Check for competitor_1
-        c1_country = event['competitor_1']['country']
+        c1_country = event['competitor_1_country']
         if c1_country not in stats:
             stats[c1_country] = {'players': 0, 'winners': 0}
         stats[c1_country]['players'] += 1
 
         # Check for competitor_2
-        c2_country = event['competitor_2']['country']
+        c2_country = event['competitor_2_country']
         if c2_country not in stats:
             stats[c2_country] = {'players': 0, 'winners': 0}
         stats[c2_country]['players'] += 1
 
         # Check winner
-        if event['flag'] == "Competitor_1_qualifier":
+        if event['flag'] == "Competitors_1_qualifier":
             stats[c1_country]['winners'] += 1
         else:
             stats[c2_country]['winners'] += 1
 
+    print(stats)
     return stats
+
 
 if __name__ == "__main__":
 
