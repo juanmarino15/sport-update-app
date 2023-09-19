@@ -85,6 +85,6 @@ if __name__ == "__main__":
 
     # Call the statistics function and print results
     stats = country_statistics()
-    print(stats)
+    print(stats) #stast
     # for country, data in stats.items():
     #     print(f"{country}: Players - {data['players']}, Winners - {data['winners']}")
