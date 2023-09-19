@@ -84,7 +84,7 @@ if __name__ == "__main__":
     print(f"Retrieved {len(country_events_today)} events from today with Colombian competitors.")
 
     # Call the statistics function and print results
-    stats = country_statistics()
-    print(stats) #stast
+    # stats = country_statistics()
+    # print(stats) #stast
     # for country, data in stats.items():
     #     print(f"{country}: Players - {data['players']}, Winners - {data['winners']}")
