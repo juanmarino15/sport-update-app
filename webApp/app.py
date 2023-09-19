@@ -21,6 +21,8 @@ def main():
         country = "Colombia"  # Default country
         events = dataAnalyzer.fetch_tennis_events()
 
+    stats = dataAnalyzer.country_statistics()
+
     return render_template_string('''
         <!DOCTYPE html>
         <html>
@@ -32,6 +34,16 @@ def main():
         <body>
             <div class="container">
                 <h2>Tennis Events Results of players from {{ country }} on {{ yesterday }}</h2>
+                <<div class="panel panel-default">
+                    <div class="panel-heading">Country Statistics</div>
+                    <div class="panel-body">
+                        <ul>
+                        {% for country, data in stats.items() %}
+                            <li><strong>{{ country }}</strong>: Total Players - {{ data.players }}, Players Who Won - {{ data.winners }}</li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
                 <form method="post">
                     <div class="form-group">
                         <label for="country">Country:</label>
@@ -80,7 +92,7 @@ def main():
             </div>
         </body>
         </html>
-    ''', events=events, country=country, yesterday=formatted_yesterday)
+    ''', events=events, country=country, yesterday=formatted_yesterday, stats=stats)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
