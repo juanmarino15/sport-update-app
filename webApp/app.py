@@ -33,17 +33,7 @@ def main():
         </head>
         <body>
             <div class="container">
-                <h2>Tennis Events Results of players from {{ country }} on {{ yesterday }}</h2>
-                <<div class="panel panel-default">
-                    <div class="panel-heading">Country Statistics</div>
-                    <div class="panel-body">
-                        <ul>
-                        {% for country, data in stats.items() %}
-                            <li><strong>{{ country }}</strong>: Total Players - {{ data.players }}, Players Who Won - {{ data.winners }}</li>
-                        {% endfor %}
-                        </ul>
-                    </div>
-                </div>
+                <h2>Tennis Events Results on {{ yesterday }}</h2>
                 <form method="post">
                     <div class="form-group">
                         <label for="country">Country:</label>
@@ -58,6 +48,7 @@ def main():
                 </div>
                 {% endif %}
                 {% if events %}
+                    <div class="panel-heading">Player Details by country</div>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -89,6 +80,16 @@ def main():
                         No results found for tennis players from {{ country }} on {{ yesterday }}.
                     </div>
                 {% endif %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">Country Statistics</div>
+                    <div class="panel-body">
+                        <ul>
+                        {% for country, data in stats.items() %}
+                            <li><strong>{{ country }}</strong>: Total Players - {{ data.players }}, Players Who Won - {{ data.winners }}</li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
             </div>
         </body>
         </html>
