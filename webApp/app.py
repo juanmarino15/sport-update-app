@@ -82,13 +82,24 @@ def main():
                 {% endif %}
                 <div class="panel panel-default">
                     <div class="panel-heading">Country Statistics</div>
-                    <div class="panel-body">
-                        <ul>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Country</th>
+                                <th>Total Players</th>
+                                <th>Players Who Won</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                         {% for country, data in stats.items() %}
-                            <li><strong>{{ country }}</strong>: Total Players - {{ data.players }}, Players Who Won - {{ data.winners }}</li>
+                            <tr>
+                                <td>{{ country }}</td>
+                                <td>{{ data.players }}</td>
+                                <td>{{ data.winners }}</td>
+                            </tr>
                         {% endfor %}
-                        </ul>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </body>
