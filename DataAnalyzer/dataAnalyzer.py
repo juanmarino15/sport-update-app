@@ -15,7 +15,7 @@ def fetch_tennis_events(country = None):
         country = "Colombia"
     # Fetch the events from the database
     events = retrieve_events(country)
-    # print(events)
+    print(events)
 
     # Store the events
     country_events = []
