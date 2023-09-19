@@ -48,7 +48,6 @@ def main():
                 </div>
                 {% endif %}
                 {% if events %}
-                    <div class="panel-heading">Player Details by country</div>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -81,8 +80,8 @@ def main():
                     </div>
                 {% endif %}
                 <div class="panel panel-default">
-                    <div class="panel-heading">Country Statistics</div>
-                    <table class="table">
+                    <div class="panel-heading">Results by Country</div>
+                    <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th>Country</th>
