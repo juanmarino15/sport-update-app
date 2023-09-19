@@ -3,6 +3,7 @@
 import sys
 import os
 import time
+from collections import OrderedDict
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from datetime import datetime, timedelta
@@ -65,8 +66,8 @@ def country_statistics():
         else:
             stats[c2_country]['winners'] += 1
 
-    print(stats)
-    return stats
+    sorted_stats = OrderedDict(sorted(stats.items()))
+    return sorted_stats
 
 
 if __name__ == "__main__":
