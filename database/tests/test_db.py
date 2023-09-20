@@ -1,12 +1,31 @@
 import unittest
 import sys
 import os
+import psycopg2
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))  # Adds the project root to the Python path.
 
-from database.db import get_db_connection, insert_event, check_event_id_exists, retrieve_events
+from database.db import insert_event, check_event_id_exists, retrieve_events
 
 class TestDBFunctions(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        # This method will run once before all test methods
+        # Establish a database connection for testing
+        cls.conn = psycopg2.connect(
+            dbname="sportsUpdate",
+            user="sportsUpdate",
+            password="sportsUpdate",
+            host="localhost",  # Assuming the PostgreSQL container is running locally
+            port="5432"
+        )
+
+    @classmethod
+    def tearDownClass(cls):
+        # This method will run once after all test methods
+        # Close the database connection after all tests
+        cls.conn.close()
 
     def setUp(self):
         # This method will run before every test method
@@ -22,24 +41,22 @@ class TestDBFunctions(unittest.TestCase):
             'flag': 'Some flag'
         }
         # Insert event
-        insert_event(self.event)
+        insert_event(self.conn, self.event)
 
     def tearDown(self):
         # This method will run after every test method
         # Cleanup: Delete the event inserted for testing
-        conn = get_db_connection()
-        cursor = conn.cursor()
+        cursor = self.conn.cursor()
         cursor.execute("DELETE FROM sport_events WHERE event_id = %s", (self.event['event_id'],))
-        conn.commit()
+        self.conn.commit()
         cursor.close()
-        conn.close()
 
     def test_insert_event(self):
         # Verify the event is inserted
-        self.assertTrue(check_event_id_exists('12345'))
+        self.assertTrue(check_event_id_exists(self.conn, '12345'))
 
     def test_retrieve_events(self):
-        events = retrieve_events()
+        events = retrieve_events(self.conn)
         self.assertTrue(any(event['event_id'] == '12345' for event in events))
 
     # Add more tests for other functions...
