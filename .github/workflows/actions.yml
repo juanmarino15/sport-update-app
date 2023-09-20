@@ -29,6 +29,9 @@ jobs:
       - name: Run dataAnalyzer tests
         run: python -m unittest DataAnalyzer/tests/test_dataAnalyzer.py
 
+      - name: Run webApp tests
+        run: python -m unittest webApp/tests/test_webApp.py
+
   deploy:
     needs: test
     runs-on: ubuntu-latest
