@@ -6,6 +6,36 @@ on:
       - main
 
 jobs:
+  test-database:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: sportsUpdate
+          POSTGRES_PASSWORD: sportsUpdate
+          POSTGRES_DB: sportsUpdate
+        ports:
+          - "5432:5432"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Database Tests
+        run: python -m unittest database/tests/test_db.py
+
   test:
     runs-on: ubuntu-latest
 
@@ -31,11 +61,6 @@ jobs:
 
       - name: Run webApp tests
         run: python -m unittest webApp/tests/test_webApp.py
-
-      - name: Run db tests
-        run: python -m unittest database/tests/test_db.py
-        env:
-          DATABASE_URL: ${{secrets.DATABASE_URL}}
   deploy:
     needs: test
     runs-on: ubuntu-latest
