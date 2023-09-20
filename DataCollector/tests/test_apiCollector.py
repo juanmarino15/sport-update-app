@@ -17,49 +17,83 @@ class TestDataCollector(unittest.TestCase):
             "sport_event": {
                 "sport_event_context": {
                     "competition": {
-                        "id": "sr:competition:12345"
+                        "id": "comp-1234",
+                        "name": "Sample Competition"
                     },
                     "season": {
-                        "id": "sr:season:67890"
+                        "id": "season-5678",
+                        "name": "Sample Season"
                     }
                 },
                 "competitors": [
-                    {"id": "sr:competitor:11111"},
-                    {"id": "sr:competitor:22222"}
+                    {
+                        "id": "player-91011",
+                        "name": "Player A",
+                        "country": "Country A",
+                        "country_code": "A",
+                        "qualifier": "home"
+                    },
+                    {
+                        "id": "player-121314",
+                        "name": "Player B",
+                        "country": "Country B",
+                        "country_code": "B",
+                        "qualifier": "away"
+                    }
                 ]
             }
         }
-        expected_event_id = "12345678901111122222"
+        expected_event_id = "1234567891011121314"
         self.assertEqual(get_custom_event_id(mock_event), expected_event_id)
 
     def test_structure_data(self):
         mock_event = {
             "sport_event": {
-                "start_time": "2022-09-19T12:00:00Z",
                 "sport_event_context": {
                     "competition": {
+                        "id": "comp-1234",
                         "name": "Sample Competition"
                     },
                     "round": {
                         "name": "Sample Round"
                     },
-                    "competitors": [
-                        {"name": "Player A", "country": "Country A", "country_code": "A", "qualifier": "home"},
-                        {"name": "Player B", "country": "Country B", "country_code": "B", "qualifier": "away"}
-                    ]
+                    "season": {
+                        "id": "season-5678",
+                        "name": "Sample Season"
+                    }
                 },
-                "sport_event_status": {
-                    "period_scores": [
-                        {"home_score": 1, "away_score": 2}
-                    ],
-                    "home_score": 1,
-                    "away_score": 2
-                }
+                "start_time": "2023-01-01T10:00:00Z",
+                "competitors": [
+                    {
+                        "id": "player-91011",
+                        "name": "Player A",
+                        "country": "Country A",
+                        "country_code": "A",
+                        "qualifier": "home"
+                    },
+                    {
+                        "id": "player-121314",
+                        "name": "Player B",
+                        "country": "Country B",
+                        "country_code": "B",
+                        "qualifier": "away"
+                    }
+                ]
+            },
+            "sport_event_status": {
+                "period_scores": [
+                    {
+                        "home_score": 1,
+                        "away_score": 2
+                    }
+                ],
+                "home_score": 1,
+                "away_score": 2
             }
         }
 
         structured_result = structure_data(mock_event)
-        self.assertEqual(structured_result["date"], "2022-09-19")
+        self.assertEqual(structured_result["date"], "2023-01-01")
         self.assertEqual(structured_result["competition_name"], "Sample Competition")
         self.assertEqual(structured_result["round_name"], "Sample Round")
         self.assertEqual(structured_result["competitors_name"], ["Player A", "Player B"])
