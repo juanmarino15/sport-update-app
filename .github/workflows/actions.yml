@@ -32,6 +32,9 @@ jobs:
       - name: Run webApp tests
         run: python -m unittest webApp/tests/test_webApp.py
 
+      - name: Run db tests
+        run: python -m unittest database/tests/test_db.py
+
   deploy:
     needs: test
     runs-on: ubuntu-latest
