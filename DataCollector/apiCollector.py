@@ -89,4 +89,3 @@ for event in structured_data:
         print('data inserted')
 print('Data insertion done')
 set_process_status("datacollector", False)
-
