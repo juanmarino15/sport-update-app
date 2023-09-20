@@ -23,8 +23,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run tests
+      - name: Run ApiCollector tests
         run: python -m unittest DataCollector/tests/test_apiCollector.py
+
+      - name: Run dataAnalyzer tests
+        run: python -m unittest DataAnalyzer/tests/test_dataAnalyzer.py
 
   deploy:
     needs: test
