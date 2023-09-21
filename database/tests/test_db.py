@@ -24,18 +24,32 @@ class TestDBFunctions(unittest.TestCase):
         cursor = cls.conn.cursor()
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS sport_events (
-                event_id text PRIMARY KEY,
-                event_start_time timestamp,
-                competition_name text,
-                round_name text,
-                competitor_1_name text,
-                competitor_1_country text,
-                competitors_1_qualifier text,
-                competitor_2_name text,
-                competitor_2_country text,
-                competitors_2_qualifier text,
-                scores text,
-                flag text
+                event_id TEXT PRIMARY KEY,
+                event_start_time TIMESTAMP,
+                sport_name TEXT,
+                category_name TEXT,
+                competition_name TEXT,
+                season_name TEXT,
+                stage_type TEXT,
+                stage_phase TEXT,
+                round_name TEXT,
+                best_of INT,
+                competitor_1_name TEXT,
+                competitor_1_country TEXT,
+                competitors_1_qualifier TEXT,
+                competitor_2_name TEXT,
+                competitor_2_country TEXT,
+                competitors_2_qualifier TEXT,
+                venue_name TEXT,
+                venue_city TEXT,
+                venue_country TEXT,
+                event_status TEXT,
+                match_status TEXT,
+                home_score INT,
+                away_score INT,
+                winner_id TEXT,
+                scores TEXT,
+                flag TEXT
             )
         """)
         cls.conn.commit()
