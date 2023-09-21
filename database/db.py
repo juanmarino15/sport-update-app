@@ -24,12 +24,13 @@ def check_event_id_exists(event_id, conn=None):
         conn.close()
     return count > 0
 
-def insert_event(event):
+def insert_event(event, conn=None):
     print(event['date'])
     print(event['competitors_country'])
 
     if not check_event_id_exists(event['event_id']):
-        conn = get_db_connection()
+        if conn is None:
+            conn = get_db_connection()
         cursor = conn.cursor()
         query = """
         INSERT INTO sport_events (
@@ -67,20 +68,22 @@ def insert_event(event):
         conn.commit()
 
         cursor.close()
-        conn.close()
+        if conn is None:
+            conn.close()
     else:
         print(f"Event with ID {event['event_id']} already exists in the database.")
 
 from datetime import datetime,timedelta
 
 # this function will retrieve all events if the country variable is empty
-def retrieve_events(country=None):
+def retrieve_events(country=None, conn=None):
     # Fetch today's date
     yesterday = datetime.now() - timedelta(1)
     formatted_yesterday = yesterday.strftime('%Y-%m-%d')
 
     # Connect to the database
-    conn = get_db_connection()
+    if conn is None:
+        conn = get_db_connection()
     cursor = conn.cursor()
 
     # If country is not specified, fetch all events
@@ -101,7 +104,8 @@ def retrieve_events(country=None):
         cursor.execute(query, (formatted_yesterday, country, country))
 
     results = cursor.fetchall()
-    conn.close()
+    if conn is None:
+        conn.close()
 
     # Convert results into a list of dictionaries
     events = [{
@@ -122,9 +126,10 @@ def retrieve_events(country=None):
     return events
 
 
-def set_process_status(process_name, status):
+def set_process_status(process_name, status, conn=None):
     """Set the status of a process in the database."""
-    conn = get_db_connection()
+    if conn is None:
+        conn = get_db_connection()
     cursor = conn.cursor()
 
     # Check if process_name already exists
@@ -146,11 +151,13 @@ def set_process_status(process_name, status):
 
     conn.commit()
     cursor.close()
-    conn.close()
+    if conn is None:
+        conn.close()
 
-def check_process_status(process_name):
+def check_process_status(process_name,conn=None):
     """Check the status of a process in the database."""
-    conn = get_db_connection()
+    if conn is None:
+        conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute(
         "SELECT is_completed FROM process_status WHERE process_name = %s",
@@ -158,7 +165,8 @@ def check_process_status(process_name):
     )
     status = cursor.fetchone()
     cursor.close()
-    conn.close()
+    if conn is None:
+        conn.close()
 
     if status:
         return status[0]
