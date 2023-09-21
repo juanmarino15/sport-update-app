@@ -41,7 +41,7 @@ class TestDBFunctions(unittest.TestCase):
             'flag': 'Some flag'
         }
         # Insert event
-        insert_event(self.event)
+        insert_event(self.event, self.conn)
 
     def tearDown(self):
         # This method will run after every test method
@@ -53,7 +53,7 @@ class TestDBFunctions(unittest.TestCase):
 
     def test_insert_event(self):
         # Verify the event is inserted
-        self.assertTrue(check_event_id_exists('12345',self.conn))
+        self.assertTrue(check_event_id_exists('12345', self.conn))
 
     def test_retrieve_events(self,):
         events = retrieve_events('USA',self.conn)
