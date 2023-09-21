@@ -14,6 +14,8 @@ def fetch_tennis_events(country = None):
     """Fetch today's events where one of the competitors is from Colombia."""
     if not country:
         country = "Colombia"
+
+
     # Fetch the events from the database
     events = retrieve_events(country)
 

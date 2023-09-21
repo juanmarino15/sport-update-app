@@ -52,6 +52,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          
+      - name: Run integration tests
+        run: python -m unittest tests/test_integrationTest.py
 
       - name: Run ApiCollector tests
         run: python -m unittest DataCollector/tests/test_apiCollector.py
@@ -61,6 +64,7 @@ jobs:
 
       - name: Run webApp tests
         run: python -m unittest webApp/tests/test_webApp.py
+
   deploy:
     needs: test
     runs-on: ubuntu-latest

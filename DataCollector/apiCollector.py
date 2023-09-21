@@ -68,7 +68,7 @@ def main():
     # Calculate the date for today - 1
     yesterday = datetime.now() - timedelta(1)
     formatted_yesterday = yesterday.strftime('%Y-%m-%d')
-    print(formatted_yesterday)
+    # print(formatted_yesterday)
 
     # Fetching the data from the API
     url = f"http://api.sportradar.us/tennis/trial/v3/en/schedules/{formatted_yesterday}/summaries.json?api_key=uqmpq6cdah4d25ww4wep2znp"
