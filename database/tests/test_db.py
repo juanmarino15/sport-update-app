@@ -41,7 +41,7 @@ class TestDBFunctions(unittest.TestCase):
             'flag': 'Some flag'
         }
         # Insert event
-        insert_event(self.conn, self.event)
+        insert_event(self.event)
 
     def tearDown(self):
         # This method will run after every test method
