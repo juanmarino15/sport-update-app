@@ -13,13 +13,15 @@ def get_db_connection():
     conn = psycopg2.connect(DATABASE_URL)
     return conn
 # test
-def check_event_id_exists(event_id):
+def check_event_id_exists(event_id, conn=None):
     """Check if an event with the given ID already exists."""
-    conn = get_db_connection()
+    if conn is None:
+        conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) FROM sport_events WHERE event_id = %s", (event_id,))
     count = cursor.fetchone()[0]
-    conn.close()
+    if conn is None:
+        conn.close()
     return count > 0
 
 def insert_event(event):
