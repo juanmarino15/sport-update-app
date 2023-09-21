@@ -53,10 +53,10 @@ class TestDBFunctions(unittest.TestCase):
 
     def test_insert_event(self):
         # Verify the event is inserted
-        self.assertTrue(check_event_id_exists(self.conn, '12345'))
+        self.assertTrue(check_event_id_exists('12345',self.conn))
 
-    def test_retrieve_events(self):
-        events = retrieve_events(self.conn)
+    def test_retrieve_events(self,):
+        events = retrieve_events('USA',self.conn)
         self.assertTrue(any(event['event_id'] == '12345' for event in events))
 
     # Add more tests for other functions...
