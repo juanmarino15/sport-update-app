@@ -28,7 +28,7 @@ def insert_event(event, conn=None):
     print(event['date'])
     print(event['competitors_country'])
 
-    if not check_event_id_exists(event['event_id']):
+    if not check_event_id_exists(event['event_id'], conn):
         if conn is None:
             conn = get_db_connection()
         cursor = conn.cursor()
