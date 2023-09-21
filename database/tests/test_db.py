@@ -20,6 +20,26 @@ class TestDBFunctions(unittest.TestCase):
             host="localhost",  # Assuming the PostgreSQL container is running locally
             port="5432"
         )
+        # Create the sport_events table if it doesn't exist
+        cursor = cls.conn.cursor()
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS sport_events (
+                event_id text PRIMARY KEY,
+                event_start_time timestamp,
+                competition_name text,
+                round_name text,
+                competitor_1_name text,
+                competitor_1_country text,
+                competitors_1_qualifier text,
+                competitor_2_name text,
+                competitor_2_country text,
+                competitors_2_qualifier text,
+                scores text,
+                flag text
+            )
+        """)
+        cls.conn.commit()
+        cursor.close()
 
     @classmethod
     def tearDownClass(cls):
