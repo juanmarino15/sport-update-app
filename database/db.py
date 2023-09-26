@@ -91,15 +91,13 @@ def retrieve_events(country=None, conn=None):
         query = """
         SELECT * 
         FROM sport_events 
-        WHERE event_start_time = %s
     """
         cursor.execute(query, (formatted_yesterday,))
     else:
         query = """
         SELECT * 
         FROM sport_events 
-        WHERE event_start_time = %s 
-        AND (competitor_1_country = %s OR competitor_2_country = %s)
+        WHERE (competitor_1_country = %s OR competitor_2_country = %s)
     """
         cursor.execute(query, (formatted_yesterday, country, country))
 
