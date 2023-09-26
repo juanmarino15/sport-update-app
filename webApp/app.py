@@ -3,14 +3,21 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # Add parent directory to sys.path
 from flask import Flask, render_template_string, request
 from datetime import datetime,timedelta
-
+from prometheus_client import start_http_server, Summary, Counter
 
 from DataAnalyzer import dataAnalyzer  # Import the module
 
 app = Flask(__name__)
 
+# Define your Prometheus metrics
+REQUEST_TIME = Summary('webapp_request_processing_seconds', 'Time spent processing main requests')
+REQUEST_COUNT = Counter('webapp_request_count', 'Total main requests processed')
+
+
 @app.route("/", methods=["GET", "POST"])
+@REQUEST_TIME.time()
 def main():
+    REQUEST_COUNT.inc()
     yesterday = datetime.now() - timedelta(1)
     formatted_yesterday = yesterday.strftime('%Y-%m-%d')
 
@@ -106,6 +113,6 @@ def main():
     ''', events=events, country=country, yesterday=formatted_yesterday, stats=stats)
 
 if __name__ == "__main__":
+    start_http_server(8000)  # Start Prometheus client server
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
-    # test

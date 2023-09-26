@@ -1,0 +1,15 @@
+# Use the official Prometheus image as a base
+FROM prom/prometheus:v2.30.0  # You can update this to whatever version you prefer
+
+# Set the working directory inside the container
+WORKDIR /etc/prometheus/
+
+# Copy your Prometheus configuration into the container
+COPY prometheus/prometheus.yml .
+
+# Expose Prometheus' default port
+EXPOSE 9090
+
+# Set the default command to run Prometheus with your configuration
+ENTRYPOINT ["/bin/prometheus"]
+CMD ["--config.file=/etc/prometheus/prometheus.yml"]

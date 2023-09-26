@@ -102,5 +102,16 @@ jobs:
         env:
           HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
 
+      - name: Build and Push Prometheus Docker Image
+        run: |
+          docker build -t registry.heroku.com/sports-update-app/prometheus -f prometheus/Dockerfile.prometheus .
+          docker push registry.heroku.com/sports-update-app/prometheus
+
+      - name: Release Prometheus Image to Heroku
+        run: |
+          heroku container:release prometheus -a sports-update-app
+        env:
+          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
+
       - name: Initialize Database
         run: heroku run python initialize_db.py --app sports-update-app
