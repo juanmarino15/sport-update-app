@@ -85,7 +85,7 @@ class TestDBFunctions(unittest.TestCase):
         # This method will run after every test method
         # Cleanup: Delete the event inserted for testing
         cursor = self.conn.cursor()
-        cursor.execute("DELETE FROM sport_events WHERE event_id = %s", (self.event['event_id'],))
+        cursor.execute("DELETE FROM sport_events WHERE event_id = %s", ('12345',))
         self.conn.commit()
         cursor.close()
 
