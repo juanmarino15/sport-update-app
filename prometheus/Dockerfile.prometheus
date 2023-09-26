@@ -1,11 +1,8 @@
 # Use the official Prometheus image as a base
-FROM prom/prometheus:v2.30.0  # You can update this to whatever version you prefer
-
-# Set the working directory inside the container
-WORKDIR /etc/prometheus/
+FROM prom/prometheus:v2.30.0
 
 # Copy your Prometheus configuration into the container
-COPY prometheus/prometheus.yml .
+COPY ./prometheus/prometheus.yml /etc/prometheus/
 
 # Expose Prometheus' default port
 EXPOSE 9090
