@@ -126,18 +126,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Login to Heroku Container Registry
-        run: docker login --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
-        env:
-          HEROKU_USERNAME: ${{secrets.HEROKU_USERNAME}}
-          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
-
-      - name: Set Environment Variables
-        run: |
-          echo "DATABASE_URL=$DATABASE_URL" >> $GITHUB_ENV
-        env:
-          DATABASE_URL: ${{secrets.DATABASE_URL}}
-
       - name: Set up Python 3.9
         uses: actions/setup-python@v2
         with:
@@ -147,6 +135,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
+      - name: Set Environment Variables
+        run: echo "DATABASE_URL= postgres://pvujtpqxqthrpr:00f000295f72ec2ed719b2f89e8ffdab83e0e6f89b15eac802e38ddd0aba7bf1@ec2-44-207-60-135.compute-1.amazonaws.com:5432/dbhoe04h3665gb" >> $GITHUB_ENV
 
       - name: Run API Collector
         run: python DataCollector/apiCollector.py
