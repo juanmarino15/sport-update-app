@@ -11,3 +11,4 @@ psycopg2==2.8.6
 sqlalchemy
 requests
 prometheus_client
+ssl
