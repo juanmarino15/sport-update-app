@@ -120,6 +120,7 @@ jobs:
         run: heroku run python initialize_db.py --app sports-update-app
 
   scheduled-api-collector:
+    if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
 
     steps:
@@ -136,8 +137,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Set Environment Variables
+        run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
+
       - name: Run API Collector
         run: python DataCollector/apiCollector.py
-        env:
-          DATABASE_URL: ${{secrets.DATABASE_URL}}
+
+
 
