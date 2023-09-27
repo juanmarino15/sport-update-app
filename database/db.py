@@ -12,7 +12,6 @@ def get_db_connection():
     #     port="5432"
     # )
     DATABASE_URL = os.environ['DATABASE_URL']
-    DATABASE_URL += "?sslmode=prefer"
     conn = psycopg2.connect(DATABASE_URL)
     return conn
 # test
