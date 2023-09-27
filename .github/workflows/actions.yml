@@ -120,7 +120,6 @@ jobs:
         run: heroku run python initialize_db.py --app sports-update-app
 
   scheduled-api-collector:
-    if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
 
     steps:

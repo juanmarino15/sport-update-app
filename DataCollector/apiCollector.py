@@ -9,7 +9,11 @@ from datetime import datetime, timedelta
 from database.db import check_event_id_exists, insert_event, set_process_status
 import uuid
 import re
+import logging
 
+# Set up logging
+logging.basicConfig(filename='app.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 # Helper functions
 def extract_number_from_id(string_id):
@@ -78,6 +82,7 @@ def main():
     # Filter and structure the data based on the given requirements
     # Apply our structure function
     structured_data = [structure_data(event) for event in data["summaries"]]
+    logger.info('Gathered all data')
 
     # Insert the data into the database
     for event in structured_data:
