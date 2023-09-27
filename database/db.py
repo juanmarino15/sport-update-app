@@ -12,12 +12,7 @@ def get_db_connection():
     #     port="5432"
     # )
     DATABASE_URL = os.environ['DATABASE_URL']
-    # Create an SSL context and disable verification
-    ssl_context = ssl.create_default_context()
-    ssl_context.check_hostname = False
-    ssl_context.verify_mode = ssl.CERT_NONE
-
-    conn = psycopg2.connect(DATABASE_URL, sslcontext=ssl_context)
+    conn = psycopg2.connect(DATABASE_URL)
     return conn
 # test
 def check_event_id_exists(event_id, conn=None):
