@@ -73,6 +73,7 @@ MOCKED_DB_EVENTS = [mock_processed_event]
 
 class WebAppIntegrationTests(unittest.TestCase):
 
+    # @patch('DataAnalyzer.pika.URLParameters')
     @patch('DataAnalyzer.dataAnalyzer.retrieve_events')
     def test_fetch_tennis_events(self, mock_retrieve_events):
         yesterday = datetime.now() - timedelta(1)

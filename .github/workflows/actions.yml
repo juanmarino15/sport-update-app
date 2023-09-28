@@ -38,6 +38,8 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    env:
+      CLOUDAMQP_URL: ${{ secrets.CLOUDAMQP_URL }}
 
     steps:
       - name: Checkout code
