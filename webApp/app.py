@@ -1,5 +1,8 @@
 import os
 import sys
+import pika
+import json
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # Add parent directory to sys.path
 from flask import Flask, render_template_string, request,Response
 from datetime import datetime,timedelta
@@ -12,6 +15,13 @@ app = Flask(__name__)
 # Define your Prometheus metrics
 REQUEST_TIME = Summary('webapp_request_processing_seconds', 'Time spent processing main requests')
 REQUEST_COUNT = Counter('webapp_request_count', 'Total main requests processed')
+
+# RabbitMQ configuration
+cloudamqp_url = os.environ.get('CLOUDAMQP_URL')
+params = pika.URLParameters(cloudamqp_url)
+connection = pika.BlockingConnection(params)
+channel = connection.channel()
+channel.queue_declare(queue='task_queue', durable=True)  # Ensuring that the task_queue exists
 
 @app.route('/metrics', methods=['GET'])
 def metrics():
@@ -27,6 +37,18 @@ def main():
     if request.method == "POST":
         country = request.form.get("country")
         events = dataAnalyzer.fetch_tennis_events(country)
+
+        # Push the task into the RabbitMQ queue instead of processing immediately
+        message = {
+            'task_type': 'fetch_tennis_events',
+            'country': country
+        }
+        channel.basic_publish(exchange='',
+                              routing_key='task_queue',
+                              body=json.dumps(message),
+                              properties=pika.BasicProperties(
+                                  delivery_mode=2,  # make message persistent
+                              ))
     else:
         country = "Colombia"  # Default country
         events = dataAnalyzer.fetch_tennis_events()

@@ -3,10 +3,11 @@
 import sys
 import os
 import time
+import pika
+import json
 from collections import OrderedDict
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from datetime import datetime, timedelta
 from database.db import retrieve_events, check_process_status
 
 def fetch_tennis_events(country = None):
@@ -71,6 +72,12 @@ def country_statistics():
     sorted_stats = OrderedDict(sorted(stats.items()))
     return sorted_stats
 
+def callback(ch, method, properties, body):
+    data = json.loads(body)
+    country = data.get('country')
+    fetch_tennis_events(country)
+
+    ch.basic_ack(delivery_tag=method.delivery_tag)
 
 if __name__ == "__main__":
 
@@ -79,16 +86,20 @@ if __name__ == "__main__":
         print("Waiting for datacollector to finish...")
         time.sleep(10)
 
-    yesterday = datetime.now() - timedelta(1)
-    formatted_yesterday = yesterday.strftime('%Y-%m-%d')
-    print(f"Fetching events for {formatted_yesterday} where one of the competitors is from Colombia...")
-
-    country_events_today = fetch_tennis_events()
-    print(country_events_today)
-    print(f"Retrieved {len(country_events_today)} events from today with Colombian competitors.")
+    cloudamqp_url = os.environ['CLOUDAMQP_URL']
+    params = pika.URLParameters(cloudamqp_url)
+    params.socket_timeout = 5
+    connection = pika.BlockingConnection(params)
+    channel = connection.channel()
+    channel.queue_declare(queue='task_queue', durable=True)
+    channel.basic_qos(prefetch_count=1)
+    channel.basic_consume(queue='task_queue', on_message_callback=callback)
 
     # Call the statistics function and print results
     stats = country_statistics()
     print(stats) #stast
     for country, data in stats.items():
         print(f"{country}: Players - {data['players']}, Winners - {data['winners']}")
+
+    print("DataAnalyzer is waiting for tasks. To exit press CTRL+C")
+    channel.start_consuming()
