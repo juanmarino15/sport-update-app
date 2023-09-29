@@ -85,6 +85,7 @@ if __name__ == "__main__":
     # while not check_process_status("datacollector"):
     #     print("Waiting for datacollector to finish...")
     #     time.sleep(10)
+    # test
 
     cloudamqp_url = os.environ['CLOUDAMQP_URL']
     params = pika.URLParameters(cloudamqp_url)
