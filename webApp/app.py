@@ -36,7 +36,7 @@ def main():
 
     if request.method == "POST":
         country = request.form.get("country")
-        events = dataAnalyzer.fetch_tennis_events(country)
+        # events = dataAnalyzer.fetch_tennis_events(country)
 
         # Push the task into the RabbitMQ queue instead of processing immediately
         message = {
