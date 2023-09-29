@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/Users/juanmarino/MSCS Boulder/Applications of Software Architecture/my_flask_app/venv/bin/python3" "$0" "$@"
+'''exec' "/Users/juanmarino/MSCS Boulder/Applications of Software Architecture/cafeSportsUpdate/venv/bin/python3" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re

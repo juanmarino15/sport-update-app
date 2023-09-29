@@ -4,7 +4,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))  # Adds the project root to the Python path.
 
 from unittest.mock import patch
-from webApp.app import app  # Adjust the import based on the directory structure
+from webApp.app import app
 
 
 class TestApp(unittest.TestCase):
@@ -13,8 +13,8 @@ class TestApp(unittest.TestCase):
         self.client = app.test_client()
         self.client.testing = True
 
-    @patch('DataAnalyzer.dataAnalyzer.fetch_tennis_events')   # Adjust the path if needed
-    @patch('DataAnalyzer.dataAnalyzer.country_statistics')    # Adjust the path if needed
+    @patch('DataAnalyzer.dataAnalyzer.fetch_tennis_events')
+    @patch('DataAnalyzer.dataAnalyzer.country_statistics')
     def test_main_route(self, mock_country_stats, mock_tennis_events):
         mock_tennis_events.return_value = []
         mock_country_stats.return_value = {}

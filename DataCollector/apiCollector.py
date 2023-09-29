@@ -68,7 +68,9 @@ def structure_data(event):
 
 
 def main():
+    # this is for queue simulation
     set_process_status("datacollector", True)
+
     # Calculate the date for today - 1
     yesterday = datetime.now() - timedelta(1)
     formatted_yesterday = yesterday.strftime('%Y-%m-%d')
@@ -90,6 +92,8 @@ def main():
             insert_event(event)
             print('data inserted')
     print('Data insertion done')
+
+    # everything is done, for queue simulation
     set_process_status("datacollector", False)
 
 if __name__ == '__main__':

@@ -8,7 +8,6 @@ from datetime import datetime, timedelta
 # Add the project root to the Python path
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from webApp import app
 from DataAnalyzer.dataAnalyzer import fetch_tennis_events
 from DataCollector.apiCollector import structure_data  # Importing structure_data
 

@@ -75,6 +75,8 @@ def country_statistics():
 if __name__ == "__main__":
 
     print("Checking if datacollector has finished processing...")
+
+    # queue simulation. If the datacollector is still collecting data, we wait on queue until is done. once its done the rest of the code runs
     while not check_process_status("datacollector"):
         print("Waiting for datacollector to finish...")
         time.sleep(10)
