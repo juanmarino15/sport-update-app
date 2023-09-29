@@ -81,10 +81,10 @@ def callback(ch, method, properties, body):
 
 if __name__ == "__main__":
 
-    # print("Checking if datacollector has finished processing...")
-    # while not check_process_status("datacollector"):
-    #     print("Waiting for datacollector to finish...")
-    #     time.sleep(10)
+    print("Checking if datacollector has finished processing...")
+    while not check_process_status("datacollector"):
+        print("Waiting for datacollector to finish...")
+        time.sleep(10)
     # test
 
     cloudamqp_url = os.environ['CLOUDAMQP_URL']
