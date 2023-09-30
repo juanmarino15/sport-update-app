@@ -7,9 +7,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import requests
 from datetime import datetime, timedelta
 from database.db import check_event_id_exists, insert_event, set_process_status
-import uuid
 import re
 import logging
+import pytz
 
 # Set up logging
 logging.basicConfig(filename='app.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -71,8 +71,10 @@ def main():
     # this is for queue simulation
     set_process_status("datacollector", True)
 
-    # Calculate the date for today - 1
-    yesterday = datetime.now() - timedelta(1)
+    # Calculate the date for today - 1 US Central
+    central = pytz.timezone('US/Central')
+    now = datetime.now(central)
+    yesterday = now - timedelta(1)
     formatted_yesterday = yesterday.strftime('%Y-%m-%d')
     # print(formatted_yesterday)
 

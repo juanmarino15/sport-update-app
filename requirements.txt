@@ -12,3 +12,4 @@ sqlalchemy
 requests
 prometheus_client
 pika==1.2.0
+pytz
