@@ -1,6 +1,6 @@
 import os
 import sys
-
+import pytz
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # Add parent directory to sys.path
 from flask import Flask, render_template_string, request,Response
 from datetime import datetime,timedelta
@@ -22,7 +22,11 @@ def metrics():
 @REQUEST_TIME.time()
 def main():
     REQUEST_COUNT.inc()
-    yesterday = datetime.now() - timedelta(1)
+
+    # Calculate the date for today - 1 US Central
+    central = pytz.timezone('US/Central')
+    now = datetime.now(central)
+    yesterday = now - timedelta(1)
     formatted_yesterday = yesterday.strftime('%Y-%m-%d')
 
     if request.method == "POST":

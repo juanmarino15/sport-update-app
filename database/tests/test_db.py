@@ -3,6 +3,7 @@ import sys
 import os
 import psycopg2
 from datetime import datetime,timedelta
+import pytz
 
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))  # Adds the project root to the Python path.
@@ -64,8 +65,12 @@ class TestDBFunctions(unittest.TestCase):
         cls.conn.close()
 
     def setUp(self):
-        yesterday = datetime.now() - timedelta(1)
+        # Calculate the date for today - 1 US Central
+        central = pytz.timezone('US/Central')
+        now = datetime.now(central)
+        yesterday = now - timedelta(1)
         formatted_yesterday = yesterday.strftime('%Y-%m-%d')
+
         # This method will run before every test method
         self.event = {
             'event_id': '12345',

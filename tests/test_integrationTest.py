@@ -4,6 +4,7 @@ import unittest
 from unittest.mock import patch
 import requests
 from datetime import datetime, timedelta
+import pytz
 
 # Add the project root to the Python path
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -75,8 +76,12 @@ class WebAppIntegrationTests(unittest.TestCase):
     # @patch('DataAnalyzer.pika.URLParameters')
     @patch('DataAnalyzer.dataAnalyzer.retrieve_events')
     def test_fetch_tennis_events(self, mock_retrieve_events):
-        yesterday = datetime.now() - timedelta(1)
+        # Calculate the date for today - 1 US Central
+        central = pytz.timezone('US/Central')
+        now = datetime.now(central)
+        yesterday = now - timedelta(1)
         formatted_yesterday = yesterday.strftime('%Y-%m-%d')
+
         """Test if webApp correctly displays tennis events."""
         response = requests.get(f"http://api.sportradar.us/tennis/trial/v3/en/schedules/{formatted_yesterday}/summaries.json?api_key=uqmpq6cdah4d25ww4wep2znp")
 

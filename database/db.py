@@ -1,6 +1,6 @@
 import psycopg2
 import os
-import ssl
+import pytz
 
 
 def get_db_connection():
@@ -79,8 +79,10 @@ from datetime import datetime,timedelta
 
 # this function will retrieve all events if the country variable is empty
 def retrieve_events(country=None, conn=None):
-    # Fetch today's date
-    yesterday = datetime.now() - timedelta(1)
+    # Calculate the date for today - 1 US Central
+    central = pytz.timezone('US/Central')
+    now = datetime.now(central)
+    yesterday = now - timedelta(1)
     formatted_yesterday = yesterday.strftime('%Y-%m-%d')
 
     # Connect to the database
